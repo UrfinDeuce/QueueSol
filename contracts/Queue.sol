@@ -32,6 +32,8 @@ contract Queue {
     }
 
     function pop() external {
+        require(_length > 0, "Queue: queue is empty");
+
         Node storage head = _nodes[0];
         Node memory firstNode = _nodes[head.next];
 
