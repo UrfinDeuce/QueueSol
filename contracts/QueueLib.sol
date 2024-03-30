@@ -29,7 +29,6 @@ library QueueLib {
         newNode.order.id = self.nextId;
 
         newNode.prev = head.prev;
-        newNode.next = 0;
         self.nodes[head.prev].next = self.nextId;
         head.prev = self.nextId;
 
@@ -38,17 +37,7 @@ library QueueLib {
     }
 
     function pop(Queue storage self) internal {
-        require(self.length > 0, "Queue: queue is empty");
-
-        uint256 toDeleteIndex = self.nodes[0].next;
-        Node memory firstNode = self.nodes[toDeleteIndex];
-
-        self.nodes[firstNode.next].prev = 0;
-        self.nodes[0].next = firstNode.next;
-
-        delete self.nodes[toDeleteIndex];
-
-        self.length--;
+        del(self, self.nodes[0].next);
     }
 
     function del(Queue storage self, uint256 index) internal {
